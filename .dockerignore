@@ -1,0 +1,7 @@
+# Ignore arquivos que não são necessários no container
+.git
+node_modules
+vendor
+Dockerfile
+docker-compose.yml
+*.md
