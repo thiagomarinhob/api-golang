@@ -106,7 +106,7 @@ func RefreshToken(c *gin.Context) {
 
 	// Gerar novo Access Token
 	claims := token.Claims.(jwt.MapClaims)
-	userID := uint(claims["user_id"].(float64))
+	userID := claims["user_id"].(string)
 
 	accessToken, err := utils.GenerateToken(userID, time.Minute*15)
 	if err != nil {

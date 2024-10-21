@@ -14,12 +14,13 @@ type Product struct {
 	ProductType     ProductType    `gorm:"foreignKey:ProductTypeID"`
 	EstablishmentID string         `json:"establishment_id"`
 	Establishment   Establishment  `gorm:"foreignKey:EstablishmentID"`
-	Prices          string         `json:"price"`
+	Price           string         `json:"price"`
 	Photos          []ProductPhoto `gorm:"foreignKey:ProductID"`
-	CartItems       []CartItem     `gorm:"foreignKey:ProductID"`
 }
 
 func (product *Product) BeforeCreate(tx *gorm.DB) (err error) {
-	product.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
-	return
+	if product.ID == "" {
+		product.ID = uuid.New().String() // Gerar o UUID se ele não existir
+	}
+	return nil
 }

@@ -12,10 +12,12 @@ type Client struct {
 	Email     string  `json:"email"`
 	AddressID string  `json:"address_id"`
 	Address   Address `gorm:"foreignKey:AddressID"`
-	Carts     []Cart  `gorm:"foreignKey:CustomerID"`
+	Orders    []Order `gorm:"foreignKey:ClientID"`
 }
 
 func (client *Client) BeforeCreate(tx *gorm.DB) (err error) {
-	client.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
+	if client.ID == "" {
+		client.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
+	}
 	return
 }

@@ -15,6 +15,8 @@ type Establishment struct {
 }
 
 func (establishment *Establishment) BeforeCreate(tx *gorm.DB) (err error) {
-	establishment.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
+	if establishment.ID == "" {
+		establishment.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
+	}
 	return
 }

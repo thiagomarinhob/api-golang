@@ -8,7 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GenerateToken(userID uint, duration time.Duration) (string, error) {
+func GenerateToken(userID string, duration time.Duration) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["user_id"] = userID
 	claims["exp"] = time.Now().Add(duration).Unix()

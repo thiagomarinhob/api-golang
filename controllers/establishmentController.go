@@ -23,10 +23,12 @@ func CreateEstablishment(c *gin.Context) {
 
 	// Validar se o AdminUserID (id do usuário) existe
 	var user models.User
-	if err := database.DB.First(&user, establishment.AdminUserID).Error; err != nil {
+	if err := database.DB.First(&user, "id = ?", establishment.AdminUserID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
 		return
 	}
+
+	establishment.AdminUser = user
 
 	// Se o usuário for válido, criamos o estabelecimento
 	if err := database.DB.Create(&establishment).Error; err != nil {

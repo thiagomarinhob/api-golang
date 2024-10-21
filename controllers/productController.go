@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"go-api/database"
@@ -12,6 +13,7 @@ import (
 func CreateProduct(c *gin.Context) {
 	var product models.Product
 	establishmentID := c.GetHeader("Establishment-ID")
+	fmt.Printf("Generated Product ID: %s\n", establishmentID)
 
 	if err := c.ShouldBindJSON(&product); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -25,6 +27,20 @@ func CreateProduct(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Conexão com o banco de dados não inicializada"})
 		return
 	}
+
+	var establishment models.Establishment
+	if err := database.DB.First(&establishment, "id = ?", product.EstablishmentID).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Establishment not found"})
+	}
+
+	product.Establishment = establishment
+
+	var productType models.ProductType
+	if err := database.DB.First(&productType, "id = ?", product.ProductTypeID).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Product Type not found"})
+	}
+
+	product.ProductType = productType
 
 	if err := database.DB.Create(&product).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

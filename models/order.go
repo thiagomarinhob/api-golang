@@ -1,21 +1,32 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
 type Order struct {
-	gorm.Model
-	ID              string          `gorm:"type:uuid;primaryKey"`
-	CartID          string          `json:"cart_id"`
-	Cart            Cart            `gorm:"foreignKey:CartID"`
-	EstablishmentID string          `json:"establishment_id"`
-	Establishment   Establishment   `gorm:"foreignKey:EstablishmentID"`
-	Timeline        []OrderTimeline `gorm:"foreignKey:OrderID"`
+	ID              string         `gorm:"type:uuid;primaryKey"`
+	ClientID        string         `gorm:"type:uuid"`
+	EstablishmentID string         `gorm:"type:uuid"`
+	Status          string         `json:"status"`
+	Items           []OrderItem    `gorm:"foreignKey:OrderID"`
+	TotalAmount     float64        `json:"total_amount"`
+	HistoryLog      []OrderHistory `gorm:"type:jsonb"` // Um campo JSONB para armazenar o histórico do pedido
 }
 
+// Definição da estrutura do histórico de pedido
+type OrderHistory struct {
+	Status    string    `json:"status"`    // O status do pedido em determinado momento
+	Timestamp time.Time `json:"timestamp"` // Quando a mudança ocorreu
+}
+
+// BeforeCreate: Gera um UUID para o Pedido
 func (order *Order) BeforeCreate(tx *gorm.DB) (err error) {
-	order.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
-	return
+	if order.ID == "" {
+		order.ID = uuid.New().String()
+	}
+	return nil
 }

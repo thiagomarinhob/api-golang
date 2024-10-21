@@ -51,7 +51,7 @@ func Auth() gin.HandlerFunc {
 				c.Abort()
 				return
 			}
-			c.Set("user_id", uint(claims["user_id"].(float64)))
+			c.Set("user_id", claims["user_id"].(string))
 		} else {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token inválido"})
 			c.Abort()

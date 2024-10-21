@@ -23,5 +23,17 @@ func SetupRoutes(router *gin.Engine) {
 		auth.GET("/products/:id", controllers.GetProductByID)
 		auth.PUT("/products/:id", controllers.UpdateProduct)
 		auth.DELETE("/products/:id", controllers.DeleteProduct)
+
+		auth.POST("/establishment", controllers.CreateEstablishment)
+		auth.GET("/establishment", controllers.GetEstablishments)
+		auth.GET("/establishment/:id", controllers.GetEstablishmentByID)
+		auth.PUT("/establishment/:id", controllers.UpdateEstablishment)
+		auth.DELETE("/establishment/:id", controllers.DeleteEstablishment)
+
+		auth.GET("/product-types", controllers.GetProductTypes)
+		auth.GET("/product-types/:id", controllers.GetProductTypeByID)
+		auth.POST("/product-types", controllers.CreateProductType)
+		auth.PUT("/product-types/:id", controllers.UpdateProductType)
+		auth.DELETE("/product-types/:id", controllers.DeleteProductType)
 	}
 }

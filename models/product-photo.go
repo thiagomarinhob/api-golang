@@ -14,6 +14,8 @@ type ProductPhoto struct {
 }
 
 func (productPhoto *ProductPhoto) BeforeCreate(tx *gorm.DB) (err error) {
-	productPhoto.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
+	if productPhoto.ID == "" {
+		productPhoto.ID = uuid.New().String() // Gerar o UUID antes de criar o produto
+	}
 	return
 }

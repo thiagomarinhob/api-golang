@@ -32,16 +32,14 @@ func ConnectDatabase() {
 	// Migrar os modelos
 	DB.AutoMigrate(
 		&models.User{},
+		&models.Token{},
 		&models.Establishment{},
 		&models.Client{},
 		&models.Address{},
 		&models.Product{},
 		&models.ProductType{},
 		&models.ProductPhoto{},
-		&models.Cart{},
-		&models.CartItem{},
+		&models.OrderItem{},
 		&models.Order{},
-		&models.OrderTimeline{},
-		&models.OrderStatus{},
 	)
 }
