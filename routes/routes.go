@@ -12,6 +12,7 @@ func SetupRoutes(router *gin.Engine) {
 	router.POST("/register", controllers.RegisterUser)
 	router.POST("/login", controllers.Login)
 	router.POST("/refresh", controllers.RefreshToken)
+	router.POST("/clients", controllers.CreateClient)
 
 	// Grupo de rotas protegidas
 	auth := router.Group("/")
@@ -35,5 +36,7 @@ func SetupRoutes(router *gin.Engine) {
 		auth.POST("/product-types", controllers.CreateProductType)
 		auth.PUT("/product-types/:id", controllers.UpdateProductType)
 		auth.DELETE("/product-types/:id", controllers.DeleteProductType)
+
+		auth.POST("/order", controllers.CreateOrder)
 	}
 }

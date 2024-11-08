@@ -53,7 +53,7 @@ func CreateProduct(c *gin.Context) {
 func GetProducts(c *gin.Context) {
 	establishmentID := c.GetHeader("Establishment-ID")
 	var products []models.Product
-	if err := database.DB.Where("establishment_id = ?", establishmentID).Preload("ProductType").Preload("ProductPhoto").Find(&products).Error; err != nil {
+	if err := database.DB.Where("establishment_id = ?", establishmentID).Preload("ProductType").Find(&products).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

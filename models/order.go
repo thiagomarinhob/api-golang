@@ -9,11 +9,11 @@ import (
 
 type Order struct {
 	ID              string         `gorm:"type:uuid;primaryKey"`
-	ClientID        string         `gorm:"type:uuid"`
+  ClientID 				*string 			 `json:"client_id,omitempty" gorm:"type:uuid;default:null"`
 	EstablishmentID string         `gorm:"type:uuid"`
 	Status          string         `json:"status"`
 	Items           []OrderItem    `gorm:"foreignKey:OrderID"`
-	TotalAmount     float64        `json:"total_amount"`
+	TotalAmount     float64         `json:"total_amount"`
 	HistoryLog      []OrderHistory `gorm:"type:jsonb"` // Um campo JSONB para armazenar o histórico do pedido
 }
 

@@ -40,5 +40,3 @@ func getEnv(key, defaultValue string) string {
 	}
 	return defaultValue
 }
-
-// var JWTSecret = os.Getenv("251099thiago")

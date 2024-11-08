@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -12,6 +13,8 @@ import (
 
 func CreateOrder(c *gin.Context) {
 	var order models.Order
+	establishmentID := c.GetHeader("Establishment-ID")
+	fmt.Printf("Generated Product ID: %s\n", establishmentID)
 
 	// Bind JSON body para o modelo Order
 	if err := c.ShouldBindJSON(&order); err != nil {
@@ -19,8 +22,12 @@ func CreateOrder(c *gin.Context) {
 		return
 	}
 
+	order.EstablishmentID = establishmentID
+
 	// Definir o status como "carrinho"
 	order.Status = "carrinho"
+
+	fmt.Println(order)
 
 	// Criar o pedido (carrinho) no banco de dados
 	if err := database.DB.Create(&order).Error; err != nil {

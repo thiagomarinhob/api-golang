@@ -7,13 +7,14 @@ import (
 
 type Address struct {
 	gorm.Model
-	ID       string   `gorm:"type:uuid;primaryKey"`
-	Street   string   `json:"street"`
-	City     string   `json:"city"`
-	State    string   `json:"state"`
-	Number   string   `json:"number"`
-	District string   `json:"district"`
-	Clients  []Client `gorm:"foreignKey:AddressID"`
+	ID       	string   `gorm:"type:uuid;primaryKey"`
+	Street   	string   `json:"street"`
+	City     	string   `json:"city"`
+	State    	string   `json:"state"`
+	Number   	string   `json:"number"`
+	District 	string   `json:"district"`
+	ClientID  string 	 `gorm:"type:uuid"`          
+  Client    Client 	 `gorm:"foreignKey:ClientID"`
 }
 
 func (address *Address) BeforeCreate(tx *gorm.DB) (err error) {
