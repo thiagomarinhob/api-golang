@@ -10,8 +10,8 @@ COPY . .
 # Baixe as dependências do Go
 RUN go mod download
 
-# Compile o aplicativo Go
-RUN go build -o main .
+# Compile o aplicativo Go apontando para o diretório onde está o main.go
+RUN go build -o main ./cmd/api
 
 # Etapa 2: Use uma imagem menor apenas para rodar o binário
 FROM alpine:3.18
@@ -23,7 +23,7 @@ WORKDIR /app
 COPY --from=builder /app/main .
 
 # Exponha a porta que a aplicação vai usar (altere para a porta que seu app usa)
-EXPOSE 8080:8080
+EXPOSE 8080
 
 # Comando para rodar o binário
 CMD ["./main"]

@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"go-api/database"
 	"go-api/models"
@@ -53,12 +54,33 @@ func CreateProduct(c *gin.Context) {
 func GetProducts(c *gin.Context) {
 	establishmentID := c.GetHeader("Establishment-ID")
 	var products []models.Product
-	if err := database.DB.Where("establishment_id = ?", establishmentID).Preload("ProductType").Find(&products).Error; err != nil {
+
+	// Pegando os parâmetros de paginação
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
+
+	// Definindo o offset
+	offset := (page - 1) * limit
+
+	// Executando a consulta com paginação
+	if err := database.DB.Where("establishment_id = ?", establishmentID).
+		Preload("ProductType").
+		Limit(limit).
+		Offset(offset).
+		Find(&products).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, products)
+
+	// Retornando os produtos com informações de paginação
+	c.JSON(http.StatusOK, gin.H{
+		"products": products,
+		"page":     page,
+		"limit":    limit,
+		"total":    len(products),
+	})
 }
+
 
 func GetProductByID(c *gin.Context) {
 	var product models.Product

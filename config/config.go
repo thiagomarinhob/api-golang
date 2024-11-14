@@ -27,7 +27,7 @@ func LoadConfig() {
 	AppConfig = Config{
 		DBUser:     getEnv("DB_USER", "docker"),
 		DBPassword: getEnv("DB_PASSWORD", "docker"),
-		DBHost:     getEnv("DB_HOST", "localhost"),
+		DBHost:     getEnv("DB_HOST", "db"),
 		DBPort:     getEnv("DB_PORT", "5432"),
 		DBName:     getEnv("DB_NAME", "postgres"),
 		JWTSecret:  getEnv("JWT_SECRET", "251099thiago"),
