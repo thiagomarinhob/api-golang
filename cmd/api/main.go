@@ -22,7 +22,7 @@ func main() {
 	server := gin.Default()
 
 	server.Use(cors.New(cors.Config{
-        AllowOrigins:     []string{"http://localhost:3000"}, // Domínios permitidos
+        AllowOrigins:     []string{"*"}, // Domínios permitidos
         AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},     // Métodos permitidos
         AllowHeaders:     []string{"Origin", "Content-Type", "Authorization", "Establishment-ID"},    // Cabeçalhos permitidos
         ExposeHeaders:    []string{"Content-Length"},                             // Cabeçalhos expostos
