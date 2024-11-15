@@ -40,7 +40,7 @@ func Login(c *gin.Context) {
 	}
 
 	// Gerar Token JWT
-	accessToken, err := utils.GenerateToken(user.ID, time.Minute*15)
+	accessToken, err := utils.GenerateToken(user.ID, time.Hour*24)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Não foi possível gerar o token de acesso"})
 		return

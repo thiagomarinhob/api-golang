@@ -34,14 +34,14 @@ func CreateProduct(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Establishment not found"})
 	}
 
-	product.Establishment = establishment
+	// product.Establishment = establishment
 
 	var productType models.ProductType
 	if err := database.DB.First(&productType, "id = ?", product.ProductTypeID).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Product Type not found"})
 	}
 
-	product.ProductType = productType
+	// product.ProductType = productType
 
 	if err := database.DB.Create(&product).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
