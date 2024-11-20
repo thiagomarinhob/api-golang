@@ -81,7 +81,6 @@ func GetProducts(c *gin.Context) {
 	})
 }
 
-
 func GetProductByID(c *gin.Context) {
 	var product models.Product
 	productID := c.Param("id")
@@ -90,7 +89,6 @@ func GetProductByID(c *gin.Context) {
 	// Buscar o produto pelo ID e verificar se pertence ao estabelecimento
 	if err := database.DB.Where("id = ? AND establishment_id = ?", productID, establishmentID).
 		Preload("ProductType").
-		Preload("ProductPhoto").
 		First(&product).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
 		return
